@@ -80,6 +80,7 @@ class Matrix():
             elif type(row) is not int:
                 raise ValueError("Não foi fornecido um número\
                  inteiro para o número de linhas.")
+
             if column < 0:
                 raise IndexError("O número de colunas fornecido é negativo.")
             elif column >= self.__columns:
@@ -88,9 +89,12 @@ class Matrix():
             elif type(column) is not int:
                 raise ValueError("Não foi fornecido um número\
                  inteiro para o número de colunas.")
-            if type(value) is not str or type(value) is not int:
-                raise ValueError("A matriz só aceita texto ou números.")
 
+            if type(value) is not str:
+                if type(value) is not int:
+                    if type(value) is not float:
+                        raise ValueError("A matriz só aceita\
+                         texto ou números.")
         except IndexError as error:
             print error.args[0]
         except ValueError as error:

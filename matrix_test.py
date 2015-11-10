@@ -67,7 +67,7 @@ class TestMatrix(unittest.TestCase):
     def test_set_value(self):
         matrix = Matrix(8, 8)
         matrix.set(7, 7, 15)
-        self.assertEqual(matrix.get(7, 7), 15)
+        self.assertEquals(matrix.get(7, 7), 15)
 
     def test_matrix_eq(self):
         matrix1 = Matrix(2, 3)
@@ -91,6 +91,10 @@ class TestMatrix(unittest.TestCase):
         matrix = Matrix(5, 5)
         matrix.zeros(3, 3)
         self.assertEquals(matrix, Matrix(3, 3))
+
+    def test_matrix_empty_zeros(self):
+        matrix = Matrix(5, 5)
+        self.assertFalse(matrix.is_empty())
 
 if __name__ == "__main__":
     unittest.main()
