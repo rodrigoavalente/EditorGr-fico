@@ -105,35 +105,27 @@ class EditorGrafico():
         self.__command = []
         self.__matrix = Matrix()
 
-    def set_command(self, command):
+    def execute_command(self, command):
+        option = ""
+
         try:
             if type(command) is not str:
                 raise TypeError("O comando enviado não é aceitavél.")
-                return False
-            else:
-                self.__command = command.split()
         except TypeError as error:
             print error[0]
         else:
-            return True
+            self.__command = command.split()
+            option = self.__command[0]
 
-    def execute_command(self):
-        command = None
-
-        try:
-            command = self.__command[0]
-        except IndexError:
-            print "Não foi definido nenhum comando."
-
-        if command == "I":
+        if option == "I":
             try:
                 (rows, columns) = 0, 0
                 if len(self.__command) > 3 or len(self.__command) < 3:
                     raise UserWarning("Quantidade de argumentos inválido.\
                         Uso: I L C [L = linhas][C = colunas]")
                 else:
-                    row = int(self.__command[1])
-                    column = int(self.__command[2])
+                    rows = int(self.__command[1])
+                    columns = int(self.__command[2])
             except UserWarning as error:
                 print error.args[0]
             except ValueError:
@@ -141,17 +133,26 @@ class EditorGrafico():
             else:
                 self.__matrix = Matrix(rows, columns)
                 return "Criando a Matriz."
-        elif command == "C":
-            return "Limpando a Matriz."
-        elif command == "L":
+        elif option == "C":
+            try:
+                if self.__matrix.is_empty():
+                    raise UserWarning("Limpando matriz vazia.")
+                elif self.__matrix.is_zeros():
+                    raise UserWarning("A matriz já está limpa.")
+            except UserWarning as error:
+                print error.args[0]
+            else:
+                self.__matrix.zeros()
+                return "Limpando a Matriz."
+        elif option == "L":
             return "Colorindo o pixel."
-        elif command == "V":
+        elif option == "V":
             return "Colorindo o segmento vertical."
-        elif command == "H":
+        elif option == "H":
             return "Colorindo o segmento horizontal."
-        elif command == "K":
+        elif option == "K":
             return "Colorindo o retângulo."
-        elif command == "F":
+        elif option == "F":
             return "Colorindo a região."
         else:
             return "Comando inválido."
