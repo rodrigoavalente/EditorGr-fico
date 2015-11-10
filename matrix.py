@@ -24,11 +24,11 @@ class Matrix():
         else:
             self.__rows = rows
             self.__columns = columns
-            self.__matrix = [[0 for x in range(rows)] for x in range(columns)]
+            self.__matrix = [[0 for x in range(columns)] for x in range(rows)]
 
     def __eq__(self, other):
-        return (isinstance(other, self.__class__)
-                and self.__dict__ == other.__dict__)
+        return (isinstance(other, self.__class__) and
+                self.__dict__ == other.__dict__)
 
     def __ne__(self, other):
         return not self.__eq__(other)
@@ -46,19 +46,24 @@ class Matrix():
 
     def get(self, row, column):
         try:
-            if row < 0:
+            if type(row) is not int:
                 raise IndexError("O número de linhas fornecido é negativo.")
-            elif row >= self.__rows:
+
+            elif row - 1 > self.__rows:
                 raise IndexError("O número de linhas fornecido é\
                  maior que as dimensões da matriz.")
-            elif type(row) is not int:
+
+            elif row - 1 < 0:
                 raise ValueError("Não foi fornecido um número\
                  inteiro para o número de linhas.")
-            if column < 0:
+
+            if column - 1 < 0:
                 raise IndexError("O número de colunas fornecido é negativo.")
-            elif column >= self.__columns:
+
+            elif column > self.__columns:
                 raise IndexError("O número de colunas fornecido é\
                  maior que as dimensões da matriz.")
+
             elif type(column) is not int:
                 raise ValueError("Não foi fornecido um número\
                  inteiro para o número de colunas.")
@@ -68,25 +73,25 @@ class Matrix():
         except ValueError as error:
             print error.args[0]
         else:
-            return self.__matrix[row][column]
+            return self.__matrix[row - 1][column - 1]
 
     def set(self, row, column, value):
         try:
-            if row < 0:
+            if type(row) is not int:
                 raise IndexError("O número de linhas fornecido é negativo.")
-            elif row >= self.__rows:
+            elif row - 1 > self.__rows:
                 raise IndexError("O número de linhas fornecido é\
                  maior que as dimensões da matriz.")
-            elif type(row) is not int:
+            elif row - 1 < 0:
                 raise ValueError("Não foi fornecido um número\
                  inteiro para o número de linhas.")
 
-            if column < 0:
+            if type(column) is not int:
                 raise IndexError("O número de colunas fornecido é negativo.")
-            elif column >= self.__columns:
+            elif column - 1 > self.__columns:
                 raise IndexError("O número de colunas fornecido é\
                  maior que as dimensões da matriz.")
-            elif type(column) is not int:
+            elif column - 1 < 0:
                 raise ValueError("Não foi fornecido um número\
                  inteiro para o número de colunas.")
 
@@ -100,7 +105,7 @@ class Matrix():
         except ValueError as error:
             print error.args[0]
         else:
-            self.__matrix[row][column] = value
+            self.__matrix[row - 1][column - 1] = value
 
     def rows(self):
         return self.__rows

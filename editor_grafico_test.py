@@ -42,5 +42,10 @@ class EditorGraficoTest(unittest.TestCase):
         editor.execute_command("I 5 5")
         self.assertRaises(UserWarning)
 
+    def test_to_color_pixel_empty(self):
+        editor = EditorGrafico()
+        editor.execute_command("L 1 2 A")
+        self.assertRaises(UserWarning)
+
 if __name__ == "__main__":
     unittest.main()

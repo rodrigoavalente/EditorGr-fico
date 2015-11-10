@@ -61,13 +61,13 @@ class TestMatrix(unittest.TestCase):
 
     def test_get_value(self):
         matrix = Matrix(7, 8)
-        value = matrix.get(0, 5)
+        value = matrix.get(1, 6)
         self.assertEqual(value, 0)
 
     def test_set_value(self):
         matrix = Matrix(8, 8)
-        matrix.set(7, 7, 15)
-        self.assertEquals(matrix.get(7, 7), 15)
+        matrix.set(8, 8, 15)
+        self.assertEquals(matrix.get(8, 8), 15)
 
     def test_matrix_eq(self):
         matrix1 = Matrix(2, 3)
