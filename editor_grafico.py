@@ -111,8 +111,10 @@ class EditorGrafico():
         try:
             if type(command) is not str:
                 raise TypeError("O comando enviado não é aceitavél.")
+
         except TypeError as error:
-            print error[0]
+            print error.args[0]
+
         else:
             self.__command = command.split()
             option = self.__command[0]
@@ -121,39 +123,135 @@ class EditorGrafico():
             try:
                 (rows, columns) = 0, 0
                 if len(self.__command) > 3 or len(self.__command) < 3:
-                    raise UserWarning("Quantidade de argumentos inválido.\
+                    raise UserWarning("Quantidade de argumentos inválida.\
                         Uso: I L C [L = linhas][C = colunas]")
-                else:
-                    rows = int(self.__command[1])
-                    columns = int(self.__command[2])
+
+                columns = int(self.__command[1])
+                rows = int(self.__command[2])
+
             except UserWarning as error:
                 print error.args[0]
+
             except ValueError:
                 print "O valor passado para linhas ou colunas não é um número."
+
             else:
                 self.__matrix = Matrix(rows, columns)
                 return "Criando a Matriz."
+
         elif option == "C":
             try:
                 if self.__matrix.is_empty():
                     raise UserWarning("Limpando matriz vazia.")
+
                 elif self.__matrix.is_zeros():
                     raise UserWarning("A matriz já está limpa.")
+
             except UserWarning as error:
                 print error.args[0]
+
             else:
                 self.__matrix.zeros()
                 return "Limpando a Matriz."
+
         elif option == "L":
-            return "Colorindo o pixel."
+            try:
+                if self.__matrix.is_empty():
+                    raise UserWarning("A matrix está vazia,\
+                     impossível colorir o pixel.")
+
+                if len(self.__command) > 4 or len(self.__command) < 4:
+                    raise UserWarning("Quantidade de argumentos inválida.\
+                        Uso: L X Y C[X = coluna][Y = linha][C = cor]")
+
+                column = int(self.__command[1])
+                row = int(self.__command[2])
+
+            except UserWarning as error:
+                print error.args[0]
+
+            except ValueError:
+                print "O valor passado para linhas ou colunas não é um número."
+
+            else:
+                self.__matrix.set(row, column, self.__command[3])
+                return "Colorindo o pixel."
+
         elif option == "V":
-            return "Colorindo o segmento vertical."
+            try:
+                if self.__matrix.is_empty():
+                    raise UserWarning("A matrix está vazia,\
+                     impossível colorir o intervalo.")
+
+                if len(self.__command) > 5 or len(self.__command) < 5:
+                    raise UserWarning("Quantidade de argumentos inválida.\
+                        Uso: V X Y1 Y2 C[X = coluna][Y1 = intervalo menor]\
+                        [Y2 = intervalor maior][C = cor]")
+
+                interval = (int(self.__command[2]), int(self.__command[3]) + 1)
+                rows = range(interval[0], interval[1])
+                column = int(self.__command[1])
+
+            except UserWarning as error:
+                print error.args[0]
+
+            except ValueError:
+                print "O valor passado para linhas ou colunas não é um número."
+
+            else:
+                for i in rows:
+                    self.__matrix.set(i, column, self.__command[4])
+                return "Colorindo o segmento vertical."
+
         elif option == "H":
-            return "Colorindo o segmento horizontal."
+            try:
+                if self.__matrix.is_empty():
+                    raise UserWarning("A matrix está vazia,\
+                     impossível colorir o intervalo.")
+
+                if len(self.__command) > 5 or len(self.__command) < 5:
+                    raise UserWarning("Quantidade de argumentos inválida.\
+                        Uso: H X1 X2 Y C[X1 = intervalo menor]\
+                        [X2 = intervalo maior][Y = linha][C = cor]")
+
+                interval = (int(self.__command[1]), int(self.__command[2]) + 1)
+                columns = range(interval[0], interval[1])
+                row = int(self.__command[3])
+
+            except UserWarning as error:
+                print error.args[0]
+
+            except ValueError:
+                print "O valor passado para linhas ou colunas não é um número."
+
+            else:
+                for j in columns:
+                    self.__matrix.set(row, j, self.__command[4])
+                print self.__matrix
+                return "Colorindo o segmento horizontal."
+
         elif option == "K":
             return "Colorindo o retângulo."
+
         elif option == "F":
             return "Colorindo a região."
+
+        elif option == "S":
+            try:
+                if len(self.__command) > 2 or len(self.__command) > 2:
+                    raise UserWarning("Quantidade de argumentos inválida\
+                        Uso: S Name [Name = nome do arquivo]")
+
+            except UserWarning as error:
+                print error.args[0]
+
+            else:
+                file = open("output/" + self.__command[1], "w")
+                file.write(self.__matrix.__str__())
+                file.close()
+
+                return "Salvo em output/" + self.__command[1]
+
         else:
             return "Comando inválido."
 
@@ -162,7 +260,11 @@ class EditorGrafico():
 
 
 def main():
-    pass
+    editor = EditorGrafico()
+    editor.execute_command("I 5 6")
+    editor.execute_command("L 2 3 A")
+    editor.execute_command("V 2 3 4 W")
+    editor.execute_command("H 3 4 2 Z")
 
 if __name__ == '__main__':
     main()

@@ -47,5 +47,30 @@ class EditorGraficoTest(unittest.TestCase):
         editor.execute_command("L 1 2 A")
         self.assertRaises(UserWarning)
 
+    def test_to_color_few_argments(self):
+        editor = EditorGrafico()
+        editor.execute_command("I 5 5")
+        editor.execute_command("L 1 1")
+        self.assertRaises(UserWarning)
+
+    def test_to_color_wrong_row_value(self):
+        editor = EditorGrafico()
+        editor.execute_command("I 5 5")
+        editor.execute_command("L A 1 C")
+        self.assertRaises(ValueError)
+
+    def test_to_color_wrong_column_value(self):
+        editor = EditorGrafico()
+        editor.execute_command("I 5 5")
+        editor.execute_command("L 1 B C")
+        self.assertRaises(ValueError)
+
+    def test_to_color_result(self):
+        editor = EditorGrafico()
+        editor.execute_command("I 5 5")
+        editor.execute_command("L 2 2 A")
+        color = editor.matrix().get(2, 2)
+        self.assertEquals(color, "A")
+
 if __name__ == "__main__":
     unittest.main()
