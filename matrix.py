@@ -5,8 +5,6 @@
 class Matrix():
 
     def __init__(self, rows=0, columns=0):
-        self.__rows = rows
-        self.__columns = columns
         try:
             if type(rows) is not int:
                 raise TypeError("O valor passado não é um número inteiro.")
@@ -24,6 +22,8 @@ class Matrix():
         except ValueError as error:
             print error.args[0]
         else:
+            self.__rows = rows
+            self.__columns = columns
             self.__matrix = [[0 for x in range(rows)] for x in range(columns)]
 
     def __eq__(self, other):
@@ -32,6 +32,17 @@ class Matrix():
 
     def __ne__(self, other):
         return not self.__eq__(other)
+
+    def __str__(self):
+        string = ""
+        for i in range(self.__rows):
+            for j in range(self.__columns):
+                if type(self.__matrix[i][j]) is str:
+                    string = string + self.__matrix[i][j] + " "
+                else:
+                    string = string + str(self.__matrix[i][j]) + " "
+            string += "\n"
+        return string
 
     def get(self, row, column):
         try:
@@ -77,6 +88,8 @@ class Matrix():
             elif type(column) is not int:
                 raise ValueError("Não foi fornecido um número\
                  inteiro para o número de colunas.")
+            if type(value) is not str or type(value) is not int:
+                raise ValueError("A matriz só aceita texto ou números.")
 
         except IndexError as error:
             print error.args[0]
@@ -84,14 +97,6 @@ class Matrix():
             print error.args[0]
         else:
             self.__matrix[row][column] = value
-
-    def __str__(self):
-        string = ""
-        for i in range(self.__rows):
-            for j in range(self.__columns):
-                string = string + str(self.__matrix[i][j]) + " "
-            string += "\n"
-        return string
 
     def rows(self):
         return self.__rows
@@ -104,6 +109,21 @@ class Matrix():
             return True
         else:
             return False
+
+    def is_zeros(self):
+        for i in range(self.__rows):
+            for j in range(self.__columns):
+                if self.__matrix[i][j] != 0:
+                    return False
+
+        return True
+
+    def zeros(self, rows=None, columns=None):
+        if rows is None:
+            rows = self.__rows
+        if columns is None:
+            columns = self.__columns
+        self.__init__(rows, columns)
 
 
 def main():

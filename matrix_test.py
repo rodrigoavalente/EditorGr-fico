@@ -83,5 +83,14 @@ class TestMatrix(unittest.TestCase):
         matrix = Matrix()
         self.assertTrue(matrix.is_empty())
 
+    def test_matrix_is_zeros(self):
+        matrix = Matrix(5, 5)
+        self.assertTrue(matrix.is_zeros())
+
+    def test_matrix_zeros(self):
+        matrix = Matrix(5, 5)
+        matrix.zeros(3, 3)
+        self.assertEquals(matrix, Matrix(3, 3))
+
 if __name__ == "__main__":
     unittest.main()
