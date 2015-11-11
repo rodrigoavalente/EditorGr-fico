@@ -134,6 +134,31 @@ class Matrix():
             columns = self.__columns
         self.__init__(rows, columns)
 
+    def find_neighbors(self, row, column):
+        neighbors = []
+        if 1 < row < self.__rows:
+            xi = (0, -1, 1)
+        elif row > 1:
+            xi = (0, -1)
+        else:
+            xi = (0, 1)
+
+        if 1 < column < self.__columns:
+            yi = (0, -1, 1)
+        elif column > 1:
+            yi = (0, -1)
+        else:
+            yi = (0, 1)
+
+        for x in xi:
+            for y in yi:
+                if x == 0 == y:
+                    continue
+                elif (x + y) == 1 or (x + y) == -1:
+                    neighbors.append((x + row, y + column))
+
+        return neighbors
+
 
 def main():
     print "Criando matrix (5,5) e imprimindo-a:"

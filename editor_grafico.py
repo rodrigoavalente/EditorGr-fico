@@ -30,9 +30,9 @@ canto inferior direito.
 
 F X Y C
 Preenche a região com a cor C. A região R é definida da seguinte forma:
-O pixel (X,Y) pertence à região. Outro pixel pertence à região, se e somente se,
-ele tiver a mesma cor que o pixel (X,Y) e tiver pelo menos um lado em comum com
-um pixel pertencente à região.
+O pixel (X,Y) pertence à região. Outro pixel pertence à região,
+se e somente se, ele tiver a mesma cor que o pixel (X,Y) e tiver pelo
+menos um lado em comum com um pixel pertencente à região.
 
 S Name
 Escreve a imagem em um arquivo de nome Name.
@@ -104,6 +104,23 @@ class EditorGrafico():
     def __init__(self):
         self.__command = []
         self.__matrix = Matrix()
+
+    def color_pixel(self, row, column, original_value, color):
+        self.__matrix.set(row, column, color)
+        colored = True
+        colored_neighbors = []
+        neighbors = self.__matrix.find_neighbors(row, column)
+
+        for neighbor in neighbors:
+            (i, j) = neighbor
+            if self.__matrix.get(i, j) == original_value:
+                self.__matrix.set(i, j, color)
+                colored_neighbors.append((i, j))
+
+        if colored_neighbors is not None:
+            for neighbor in colored_neighbors:
+                (i, j) = neighbor
+                self.color_pixel(i, j, original_value, color)
 
     def execute_command(self, command):
         option = ""
@@ -227,14 +244,63 @@ class EditorGrafico():
             else:
                 for j in columns:
                     self.__matrix.set(row, j, self.__command[4])
-                print self.__matrix
                 return "Colorindo o segmento horizontal."
 
         elif option == "K":
-            return "Colorindo o retângulo."
+            try:
+                if self.__matrix.is_empty():
+                    raise UserWarning("A matrix está vazia,\
+                     impossível colorir o intervalo.")
+
+                if len(self.__command) > 6 or len(self.__command) < 6:
+                    raise UserWarning("""Quantidade de argumentos inválida.
+                                      Uso: K X1 X2 Y1 Y2 C
+                                      [X1 = intervalo menor colunas]
+                                      [X2 = intervalo maior colunas]
+                                      [Y1 = intervalo menor linhas]
+                                      [Y2 = intervalo maior linhas]
+                                      [C = cor]""")
+
+                rows_interval = range(int(self.__command[3]),
+                                      int(self.__command[4]) + 1)
+                columns_interval = range(int(self.__command[1]),
+                                         int(self.__command[2]) + 1)
+
+            except UserWarning as error:
+                print error.args[0]
+
+            except ValueError:
+                print "O valor passado para linhas ou colunas não é um número."
+
+            else:
+                for i in rows_interval:
+                    for j in columns_interval:
+                        self.__matrix.set(i, j, self.__command[5])
+                print self.__matrix
+                return "Colorindo o retângulo."
 
         elif option == "F":
-            return "Colorindo a região."
+            try:
+                if self.__matrix.is_empty():
+                    raise UserWarning("A matrix está vazia,\
+                     impossível colorir o pixel.")
+
+                if len(self.__command) > 4 or len(self.__command) < 4:
+                    raise UserWarning("Quantidade de argumentos inválida.\
+                        Uso: F X Y C[X = coluna][Y = linha][C = cor]")
+
+                column = int(self.__command[1])
+                row = int(self.__command[2])
+            except UserWarning as error:
+                print error.args[0]
+
+            except ValueError:
+                print "O valor passado para linhas ou colunas não é um número."
+
+            else:
+                value = self.__matrix.get(row, column)
+                self.color_pixel(row, column, value, self.__command[3])
+                return "Colorindo a região."
 
         elif option == "S":
             try:
@@ -261,10 +327,15 @@ class EditorGrafico():
 
 def main():
     editor = EditorGrafico()
-    editor.execute_command("I 5 6")
-    editor.execute_command("L 2 3 A")
-    editor.execute_command("V 2 3 4 W")
-    editor.execute_command("H 3 4 2 Z")
+    while True:
+        command = raw_input("Digite o comando a ser executado: ")
+        if command == "X":
+            print "Encerrando a aplicação."
+            break
+        else:
+            answer = editor.execute_command(command)
+            if answer is not None:
+                print answer
 
 if __name__ == '__main__':
     main()
