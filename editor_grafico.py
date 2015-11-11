@@ -142,8 +142,9 @@ class EditorGrafico():
             try:
                 (rows, columns) = 0, 0
                 if len(self.__command) > 3 or len(self.__command) < 3:
-                    raise UserWarning("Quantidade de argumentos inválida.\
-                        Uso: I L C [L = linhas][C = colunas]")
+                    raise UserWarning("""Quantidade de argumentos inválida.
+                                         Uso: I L C
+                                         [L = linhas][C = colunas]""")
 
                 columns = int(self.__command[1])
                 rows = int(self.__command[2])
@@ -176,12 +177,13 @@ class EditorGrafico():
         elif option == "L":
             try:
                 if self.__matrix.is_empty():
-                    raise UserWarning("A matrix está vazia,\
-                     impossível colorir o pixel.")
+                    raise UserWarning("""A matrix está vazia,
+                                         impossível colorir o pixel.""")
 
                 if len(self.__command) > 4 or len(self.__command) < 4:
-                    raise UserWarning("Quantidade de argumentos inválida.\
-                        Uso: L X Y C[X = coluna][Y = linha][C = cor]")
+                    raise UserWarning("""Quantidade de argumentos inválida.
+                                         Uso: L X Y C
+                                         [X = coluna][Y = linha][C = cor]""")
 
                 column = int(self.__command[1])
                 row = int(self.__command[2])
@@ -199,13 +201,14 @@ class EditorGrafico():
         elif option == "V":
             try:
                 if self.__matrix.is_empty():
-                    raise UserWarning("A matrix está vazia,\
-                     impossível colorir o intervalo.")
+                    raise UserWarning("""A matrix está vazia,
+                                         impossível colorir o intervalo.""")
 
                 if len(self.__command) > 5 or len(self.__command) < 5:
-                    raise UserWarning("Quantidade de argumentos inválida.\
-                        Uso: V X Y1 Y2 C[X = coluna][Y1 = intervalo menor]\
-                        [Y2 = intervalor maior][C = cor]")
+                    raise UserWarning("""Quantidade de argumentos inválida.
+                                         Uso: V X Y1 Y2 C
+                                         [X = coluna][Y1 = intervalo menor]
+                                         [Y2 = intervalor maior][C = cor]""")
 
                 interval = (int(self.__command[2]), int(self.__command[3]) + 1)
                 rows = range(interval[0], interval[1])
@@ -225,13 +228,15 @@ class EditorGrafico():
         elif option == "H":
             try:
                 if self.__matrix.is_empty():
-                    raise UserWarning("A matrix está vazia,\
-                     impossível colorir o intervalo.")
+                    raise UserWarning("""A matrix está vazia,
+                                         impossível colorir o intervalo.""")
 
                 if len(self.__command) > 5 or len(self.__command) < 5:
-                    raise UserWarning("Quantidade de argumentos inválida.\
-                        Uso: H X1 X2 Y C[X1 = intervalo menor]\
-                        [X2 = intervalo maior][Y = linha][C = cor]")
+                    raise UserWarning("""Quantidade de argumentos inválida.
+                                         Uso: H X1 X2 Y C
+                                         [X1 = intervalo menor]
+                                         [X2 = intervalo maior]
+                                         [Y = linha][C = cor]""")
 
                 interval = (int(self.__command[1]), int(self.__command[2]) + 1)
                 columns = range(interval[0], interval[1])
@@ -251,8 +256,8 @@ class EditorGrafico():
         elif option == "K":
             try:
                 if self.__matrix.is_empty():
-                    raise UserWarning("A matrix está vazia,\
-                     impossível colorir o intervalo.")
+                    raise UserWarning("""A matrix está vazia,
+                                         impossível colorir o intervalo.""")
 
                 if len(self.__command) > 6 or len(self.__command) < 6:
                     raise UserWarning("""Quantidade de argumentos inválida.
@@ -288,8 +293,9 @@ class EditorGrafico():
                      impossível colorir o pixel.")
 
                 if len(self.__command) > 4 or len(self.__command) < 4:
-                    raise UserWarning("Quantidade de argumentos inválida.\
-                        Uso: F X Y C[X = coluna][Y = linha][C = cor]")
+                    raise UserWarning("""Quantidade de argumentos inválida.
+                                         Uso: F X Y C
+                                         [X = coluna][Y = linha][C = cor]""")
 
                 column = int(self.__command[1])
                 row = int(self.__command[2])
@@ -307,8 +313,9 @@ class EditorGrafico():
         elif option == "S":
             try:
                 if len(self.__command) > 2 or len(self.__command) > 2:
-                    raise UserWarning("Quantidade de argumentos inválida\
-                        Uso: S Name [Name = nome do arquivo]")
+                    raise UserWarning("""Quantidade de argumentos inválida
+                                         Uso: S Name
+                                         [Name = nome do arquivo]""")
 
             except UserWarning as error:
                 print error.args[0]

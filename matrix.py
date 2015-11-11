@@ -9,14 +9,14 @@ class Matrix():
             if type(rows) is not int:
                 raise TypeError("O valor passado não é um número inteiro.")
             elif rows < 0:
-                raise ValueError("Não é possível iniciar a matriz \
-                    com o número de linhas negativo.")
+                raise ValueError("""Não é possível iniciar a matriz
+                                    com o número de linhas negativo.""")
 
             if type(columns) is not int:
                 raise TypeError("O valor passado não é um número inteiro.")
             elif columns < 0:
-                raise ValueError("Não é possível iniciar a matriz \
-                    com o número de colunas negativo.")
+                raise ValueError("""Não é possível iniciar a matriz
+                                    com o número de colunas negativo.""")
         except TypeError as error:
             print error.args[0]
         except ValueError as error:
@@ -50,23 +50,23 @@ class Matrix():
                 raise IndexError("O número de linhas fornecido é negativo.")
 
             elif row - 1 > self.__rows:
-                raise IndexError("O número de linhas fornecido é\
-                 maior que as dimensões da matriz.")
+                raise IndexError("""O número de linhas fornecido é
+                                    maior que as dimensões da matriz.""")
 
             elif row - 1 < 0:
-                raise ValueError("Não foi fornecido um número\
-                 inteiro para o número de linhas.")
+                raise ValueError("""Não foi fornecido um número
+                                  inteiro para o número de linhas.""")
 
             if column - 1 < 0:
                 raise IndexError("O número de colunas fornecido é negativo.")
 
             elif column > self.__columns:
-                raise IndexError("O número de colunas fornecido é\
-                 maior que as dimensões da matriz.")
+                raise IndexError("""O número de colunas fornecido é
+                                    maior que as dimensões da matriz.""")
 
             elif type(column) is not int:
-                raise ValueError("Não foi fornecido um número\
-                 inteiro para o número de colunas.")
+                raise ValueError("""Não foi fornecido um número
+                                    inteiro para o número de colunas.""")
 
         except IndexError as error:
             print error.args[0]
@@ -83,23 +83,23 @@ class Matrix():
                 raise IndexError("O número de linhas fornecido é\
                  maior que as dimensões da matriz.")
             elif row - 1 < 0:
-                raise ValueError("Não foi fornecido um número\
-                 inteiro para o número de linhas.")
+                raise ValueError("""Não foi fornecido um número
+                                    inteiro para o número de linhas.""")
 
             if type(column) is not int:
                 raise IndexError("O número de colunas fornecido é negativo.")
             elif column - 1 > self.__columns:
-                raise IndexError("O número de colunas fornecido é\
-                 maior que as dimensões da matriz.")
+                raise IndexError("""O número de colunas fornecido é
+                                    maior que as dimensões da matriz.""")
             elif column - 1 < 0:
-                raise ValueError("Não foi fornecido um número\
-                 inteiro para o número de colunas.")
+                raise ValueError("""Não foi fornecido um número
+                                    inteiro para o número de colunas.""")
 
             if type(value) is not str:
                 if type(value) is not int:
                     if type(value) is not float:
-                        raise ValueError("A matriz só aceita\
-                         texto ou números.")
+                        raise ValueError("""A matriz só aceita
+                                            texto ou números.""")
         except IndexError as error:
             print error.args[0]
         except ValueError as error:
