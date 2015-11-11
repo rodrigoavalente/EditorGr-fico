@@ -96,6 +96,8 @@ REEEEEEERR
 REEEEEEERR
 RRRRRRRRRR
 """
+
+import os
 from matrix import Matrix
 
 
@@ -312,6 +314,8 @@ class EditorGrafico():
                 print error.args[0]
 
             else:
+                if not os.path.exists("output"):
+                    os.makedirs("output")
                 file = open("output/" + self.__command[1], "w")
                 file.write(self.__matrix.__str__())
                 file.close()
